@@ -37,20 +37,15 @@ static uint8_t mouse_keycode_for_fkey(uint16_t keycode) {
     }
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+void tap_code(uint8_t keycode) {
     uint8_t mouse_keycode = mouse_keycode_for_fkey(keycode);
 
-    if (mouse_keycode == KC_NO) {
-        return true;
+    if (mouse_keycode != KC_NO) {
+        tap_code_delay(mouse_keycode, TAP_CODE_DELAY);
+        return;
     }
 
-    if (record->event.pressed) {
-        register_code(mouse_keycode);
-    } else {
-        unregister_code(mouse_keycode);
-    }
-
-    return false;
+    tap_code_delay(keycode, keycode == KC_CAPS_LOCK ? TAP_HOLD_CAPS_DELAY : TAP_CODE_DELAY);
 }
 
 led_config_t g_led_config = {{// Key Matrix to LED Index
