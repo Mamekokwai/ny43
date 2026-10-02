@@ -105,4 +105,4 @@
 #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 220 // 亮度最大值
 
 
-#define DYNAMIC_KEYMAP_LAYER_COUNT 8  // 最大按键层数
+#define DYNAMIC_KEYMAP_LAYER_COUNT 3  // 最大按键层数
