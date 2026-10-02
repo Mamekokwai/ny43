@@ -17,6 +17,9 @@
         "rgb_matrix": true,
         "sleep_led": true
     },
+    "modules": [
+        "qmk_concurrent_macros/concurrent_macros"
+    ],
     "qmk": {
         "locking": {
             "enabled": true,
