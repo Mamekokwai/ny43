@@ -52,6 +52,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+static uint8_t mouse_keycode_for_fkey(uint16_t keycode) {
+    switch (keycode) {
+        case KC_F13: return MS_BTN1;
+        case KC_F14: return MS_BTN2;
+        case KC_F15: return MS_BTN3;
+        case KC_F16: return MS_UP;
+        case KC_F17: return MS_DOWN;
+        case KC_F18: return MS_LEFT;
+        case KC_F19: return MS_RGHT;
+        case KC_F20: return MS_WHLU;
+        case KC_F21: return MS_WHLD;
+        default:     return KC_NO;
+    }
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    uint8_t mouse_keycode = mouse_keycode_for_fkey(keycode);
+
+    if (mouse_keycode == KC_NO) {
+        return true;
+    }
+
+    if (record->event.pressed) {
+        register_code(mouse_keycode);
+    } else {
+        unregister_code(mouse_keycode);
+    }
+
+    return false;
+}
+
 led_config_t g_led_config = {{// Key Matrix to LED Index
                               {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
                               {12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, NO_LED},
@@ -61,4 +92,3 @@ led_config_t g_led_config = {{// Key Matrix to LED Index
                               {220, 0}, {200, 0}, {180, 0}, {160, 0}, {140, 0}, {120, 0}, {100, 0}, {80, 0}, {60, 0}, {40, 0}, {20, 0}, {0, 0}, {215, 21}, {195, 21}, {175, 21}, {155, 21}, {135, 21}, {115, 21}, {95, 21}, {75, 21}, {55, 21}, {35, 21}, {10, 21}, {210, 42}, {190, 42}, {170, 42}, {150, 42}, {130, 42}, {110, 42}, {90, 42}, {70, 42}, {50, 42}, {20, 42}, {0, 42}, {220, 63}, {200, 63}, {180, 63}, {140, 63}, {90, 63}, {60, 63}, {40, 63}, {20, 63}, {0, 63}},
                              {// LED Index to Flag
                               0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}};
-
